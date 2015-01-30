@@ -68,10 +68,10 @@ public interface Player {
     public List<Song> sortedByDuration();
 
 
-    public class Song {
+    public static class Song {
         private String artist;
         private String songName;
-        private double songDuration;
+        private int songDuration;
 
         public String getArtist() {
             return artist;
@@ -89,11 +89,11 @@ public interface Player {
             this.songName = songName;
         }
 
-        public double getSongDuration() {
+        public int getSongDuration() {
             return songDuration;
         }
 
-        public void setSongDuration(double songDuration) {
+        public void setSongDuration(int songDuration) {
             this.songDuration = songDuration;
         }
     }
