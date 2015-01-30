@@ -16,12 +16,56 @@ import java.util.List;
  */
 
 public interface Player {
+    /**
+     * Метод "загружает" плейлист.
+     *
+     * @param playlist список объектов типа Song (вложеннный в данный интерфейс класс см.ниже).
+     */
+    public void setPlaylist(List<Song> playlist);
 
-    public void setPlaylist(List playlist);
-
+    /**
+     * Метод возвращает плейлист.
+     */
     public List<Song> getPlaylist();
 
-  /*  startPlaying(),  clearList(),  repeat(), getCurrentComposition(time)*/
+    /**
+     * Метод начинает проигрывание, т.е. отсчет времени и переход от одной песне к другой в порядке следования с учетом
+     * их длительности.
+     */
+    public void play();
+
+    /**
+     * Метод полностью очищает плейлист.
+     */
+    public void clearPlaylist();
+
+    /**
+     * Метод возвращает песню, "играющую" в данный момент.
+     *
+     * @param time  время с начала проигрывания плейлиста.
+     */
+    public Song getCurrentSong(double time);
+
+    /**
+     * Метод сортирует плейлист по имени артиста.
+     *
+     * @return сортированный плейлист
+     */
+    public List<Song> sortedByArtist();
+
+    /**
+     * Метод сортирует плейлист по названию трека.
+     *
+     * @return сортированный плейлист
+     */
+    public List<Song> sortedByName();
+
+    /**
+     * Метод сортирует плейлист по длительности трека.
+     *
+     * @return сортированный плейлист
+     */
+    public List<Song> sortedByDuration();
 
 
     public class Song {
