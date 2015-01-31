@@ -7,12 +7,12 @@ public class PlayerEtalon implements Player {
 
     @Override
     public void setPlaylist(List<Song> playlist) {
-
+        this.playlist = playlist;
     }
 
     @Override
     public List<Song> getPlaylist() {
-        return null;
+        return playlist;
     }
 
     @Override
