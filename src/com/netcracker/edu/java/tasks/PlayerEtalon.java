@@ -7,6 +7,12 @@ import java.util.List;
 public class PlayerEtalon implements Player {
     private List<Player.Song> playlist;
     private Song currentSong;
+    private int startTime;
+    private enum Status {
+        stopped, playing, paused;
+    }
+
+    private Status currentStatus = stopped;
 
     @Override
     public void setPlaylist(List<Song> playlist) {
@@ -19,7 +25,18 @@ public class PlayerEtalon implements Player {
     }
 
     @Override
-    public void play() {
+    public void play(int startTime) {
+        this.startTime = startTime;
+        currentSong = playlist.get(0);
+    }
+
+    @Override
+    public void stopPlaying() {
+
+    }
+
+    @Override
+    public void pausePlaying(int time) {
 
     }
 
@@ -29,7 +46,7 @@ public class PlayerEtalon implements Player {
     }
 
     @Override
-    public Song getCurrentSong(double time) {
+    public Song getCurrentSong(int time) {
         return currentSong;
     }
 

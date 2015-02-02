@@ -5,9 +5,6 @@ import org.junit.*;
 import java.util.*;
 
 import static com.netcracker.edu.java.tasks.Player.Song;
-import static java.util.Arrays.*;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class PlayerTest {
