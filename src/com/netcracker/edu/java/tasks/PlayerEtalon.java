@@ -7,8 +7,8 @@ import java.util.List;
 
 public class PlayerEtalon implements Player {
     private List<Player.Song> playlist;
-    private int startTime;
-    private int pauseTime;
+    private int startTime = 0;
+    private int pauseTime = 0;
 
     private enum Status {
         STOPPED, PLAYING, PAUSED;
@@ -55,6 +55,8 @@ public class PlayerEtalon implements Player {
         } else if (status == Status.PAUSED) {
             setStartTime(pauseTime);
             status = Status.PLAYING;
+        } else {
+            setStartTime(startTime);
         }
     }
 
@@ -132,20 +134,4 @@ public class PlayerEtalon implements Player {
         });
         return playlist;
     }
-
-
-
-    /*public static void main(String[] args) {
-        Player player = new PlayerEtalon();
-        Song firstSong = new Song("Miles Kane", "Don't Forget Who You Are", 182);
-        Song secondSong = new Song("Katy Perry", "Roar", 202);
-        Song thirdSong = new Song("The Beatles", "Help", 135);
-        List<Song> list = new ArrayList<Song>();
-        list.add(firstSong);
-        list.add(secondSong);
-        list.add(thirdSong);
-        player.setPlaylist(list);
-        player.play(29);
-        System.out.println(player.getSong(465).getSongName());
-    }*/
 }

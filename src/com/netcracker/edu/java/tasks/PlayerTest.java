@@ -98,7 +98,6 @@ public class PlayerTest {
                 return ((Song) o1).getArtist().compareTo(((Song) o2).getArtist());
             }
         });
-        System.out.println(playlistTest);
         assertEquals(playlistTest, playerTest.sortedByArtist());
     }
 
@@ -117,9 +116,34 @@ public class PlayerTest {
         assertEquals(playlistTest, playerTest.sortedByDuration());
     }
 
-    @Ignore
     @Test
-    public void checkCurrentSong() {
+    public void checkGetSong() {
+        //test of stopped player
+        assertNull(playerTest.getSong(0));
 
+        //test of playing player
+        playerTest.play(50);
+        assertEquals(playerTest.getSong(51), firstSong);
+        assertEquals(playerTest.getSong(333), secondSong);
+        assertEquals(playerTest.getSong(671), fourthSong);
+        assertNull(playerTest.getSong(927));
+
+        //test of playing player after pause's call
+        playerTest.play(0);
+        playerTest.pause(183);
+        assertEquals(playerTest.getSong(1231), secondSong);
+
+        playerTest.play(195);
+        playerTest.pause(315);
+        assertEquals(playerTest.getSong(1231), firstSong);
+
+        playerTest.play(598);
+        playerTest.pause(1687);
+        assertNull(playerTest.getSong(21));
+
+        //test of stopped player after playing
+        playerTest.play(168);
+        playerTest.stop();
+        assertNull(playerTest.getSong(123));
     }
 }
