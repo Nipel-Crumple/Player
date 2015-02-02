@@ -35,22 +35,21 @@ public interface Player {
     /**
      * Метод начинает проигрывание, т.е. отсчет времени и переход от одной песне к другой в порядке следования с учетом
      * их длительности.
-     * @param startTime - время, с которого начинается проигрывание установленного плейлиста
      */
     public void play(int starTime);
 
     /**
      * Метод останавливает проигрывание плейлиста.
-     * После вызова stopPlaying() метод getCurrentSong(time) возвращает значение null
+     * После вызова stopPlaying() метод getSong(time) возвращает значение null
      */
-    public void stopPlaying();
+    public void stop();
 
     /**
      * Метод останавливает проигрывание текущей композиции.
      * Дальнейшее воспроизведение начинается с момента, на котором оно закончилось
      * @param pauseTime - время вызова метода pausePlaying(time)
      */
-    public void pausePlaying(int pauseTime);
+    public void pause(int pauseTime);
 
     /**
      * Метод полностью очищает плейлист.
@@ -62,7 +61,7 @@ public interface Player {
      *
      * @param time  время с начала проигрывания плейлиста.
      */
-    public Song getCurrentSong(int time);
+    public Song getSong(int time);
 
     /**
      * Метод сортирует плейлист по имени артиста.

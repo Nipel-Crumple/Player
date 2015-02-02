@@ -1,18 +1,36 @@
 package com.netcracker.edu.java.tasks;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class PlayerEtalon implements Player {
     private List<Player.Song> playlist;
-    private Song currentSong;
     private int startTime;
+    private int pauseTime;
+
     private enum Status {
-        stopped, playing, paused;
+        STOPPED, PLAYING, PAUSED;
     }
 
-    private Status currentStatus = stopped;
+    private Status status = Status.STOPPED;
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getPauseTime() {
+        return pauseTime;
+    }
+
+    public void setPauseTime(int pauseTime) {
+        this.pauseTime = pauseTime;
+    }
 
     @Override
     public void setPlaylist(List<Song> playlist) {
@@ -25,29 +43,61 @@ public class PlayerEtalon implements Player {
     }
 
     @Override
-    public void play(int startTime) {
-        this.startTime = startTime;
-        currentSong = playlist.get(0);
-    }
-
-    @Override
-    public void stopPlaying() {
-
-    }
-
-    @Override
-    public void pausePlaying(int time) {
-
-    }
-
-    @Override
     public void clearPlaylist() {
         playlist.clear();
     }
 
     @Override
-    public Song getCurrentSong(int time) {
-        return currentSong;
+    public void play(int startTime) {
+        if (status == Status.STOPPED){
+            setStartTime(startTime);
+            status = Status.PLAYING;
+        } else if (status == Status.PAUSED) {
+            setStartTime(pauseTime);
+            status = Status.PLAYING;
+        }
+    }
+
+    @Override
+    public void stop() {
+        status = Status.STOPPED;
+    }
+
+    @Override
+    public void pause(int pauseTime) {
+        setPauseTime(pauseTime);
+        status = Status.PAUSED;
+    }
+
+    @Override
+    public Song getSong(int time) {
+
+        if (status == Status.STOPPED) {
+            return null;
+        } else if (status == Status.PAUSED) {
+            int deltaPausePlay;
+            int upTime = 0;
+            deltaPausePlay = getPauseTime() - getStartTime();
+            for (Song temp : playlist) {
+                upTime += temp.getSongDuration();
+                if (deltaPausePlay < upTime) {
+                    return temp;
+                }
+            }
+        } else if (status == Status.PLAYING){
+            int deltaPlay;
+            int upTime = 0;
+            deltaPlay = time - getStartTime();
+            for (Song temp : playlist) {
+                upTime += temp.getSongDuration();
+                if (deltaPlay < upTime) {
+                    return temp;
+                }
+            }
+        } else {
+            return null;
+        }
+        return null;
     }
 
     @Override
@@ -82,4 +132,20 @@ public class PlayerEtalon implements Player {
         });
         return playlist;
     }
+
+
+
+    /*public static void main(String[] args) {
+        Player player = new PlayerEtalon();
+        Song firstSong = new Song("Miles Kane", "Don't Forget Who You Are", 182);
+        Song secondSong = new Song("Katy Perry", "Roar", 202);
+        Song thirdSong = new Song("The Beatles", "Help", 135);
+        List<Song> list = new ArrayList<Song>();
+        list.add(firstSong);
+        list.add(secondSong);
+        list.add(thirdSong);
+        player.setPlaylist(list);
+        player.play(29);
+        System.out.println(player.getSong(465).getSongName());
+    }*/
 }
