@@ -11,7 +11,7 @@ import static com.netcracker.edu.java.tasks.Player.Song;
 import static org.junit.Assert.*;
 
 
-/*@IpcTestClass(weight = 3)*/
+/*@IpcTestClass(weight = 6)*/
 public class PlayerTest /*extends IpccenterTest<Player>*/ {
 
     private static Player playerTest;
