@@ -75,6 +75,7 @@ public interface Player {
      * Метод сортирует плейлист по имени артиста.
      *
      * @return сортированный плейлист
+     * @throws java.lang.IllegalStateException при отсутствии плейлиста
      */
     public List<Song> sortedByArtist();
 
@@ -82,6 +83,7 @@ public interface Player {
      * Метод сортирует плейлист по названию трека.
      *
      * @return сортированный плейлист
+     * @throws java.lang.IllegalStateException при отсутствии плейлиста
      */
     public List<Song> sortedByName();
 
@@ -89,6 +91,7 @@ public interface Player {
      * Метод сортирует плейлист по длительности трека.
      *
      * @return сортированный плейлист
+     * @throws java.lang.IllegalStateException при отсутствии плейлиста
      */
     public List<Song> sortedByDuration();
 
