@@ -2,12 +2,17 @@ package com.netcracker.edu.java.tasks;
 
 import org.junit.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import static com.netcracker.edu.java.tasks.Player.Song;
 import static org.junit.Assert.*;
 
-public class PlayerTest {
+
+/*@IpcTestClass(weight = 3)*/
+public class PlayerTest /*extends IpccenterTest<Player>*/ {
 
     private static Player playerTest;
     private static List playlistTest;
@@ -19,12 +24,12 @@ public class PlayerTest {
 
     @BeforeClass
     public static void setUpOneTime() {
-       playerTest = new PlayerEtalon();
-       firstSong = new Song("Miles Kane", "Don't Forget Who You Are", 182);
-       secondSong = new Song("Katy Perry", "Roar", 202);
-       thirdSong = new Song("The Beatles", "Help", 135);
-       fourthSong = new Song("Arctic Monkeys", "Snap Out of It", 193);
-       fivethSong = new Song("Jack White", "Steady as She Go", 164);
+        playerTest = new PlayerEtalon();
+        firstSong = new Song("Miles Kane", "Don't Forget Who You Are", 182);
+        secondSong = new Song("Katy Perry", "Roar", 202);
+        thirdSong = new Song("The Beatles", "Help", 135);
+        fourthSong = new Song("Arctic Monkeys", "Snap Out of It", 193);
+        fivethSong = new Song("Jack White", "Steady as She Go", 164);
     }
 
     @AfterClass
@@ -56,26 +61,30 @@ public class PlayerTest {
     /**
      * Test helps us to find out if user's playlist was installed incorrectly
      */
-    @Test
+    @Test(timeout = 3000)
+    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of setPlaylist() (return unexpected value)", testName = "test setter for Playlist")*/
     public void checkSetPlaylist() {
         assertNotNull(playerTest.getPlaylist());
         assertFalse(playerTest.getPlaylist().isEmpty());
         assertEquals(playlistTest, playerTest.getPlaylist());
     }
 
-    /**
-     * This test checks the right order in user's playlist after sort by song's name
-     */
 
     /**
      * Check if playlist was cleared not properly
      */
-    @Test
+    @Test(timeout = 3000)
+    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of clearPlaylist() (list isn't empty)", testName = " test clear Playlist")*/
     public void checkClearPlaylist() {
         playerTest.clearPlaylist();
         assertTrue(playerTest.getPlaylist().isEmpty());
     }
-    @Test
+
+    /**
+     * This test checks the right order in user's playlist after sort by song's name
+     */
+    @Test(timeout = 3000)
+    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (wrong order in playlist)", testName = " test order by name")*/
     public void checkSortingByName() {
         Collections.sort(playlistTest, new Comparator() {
             @Override
@@ -90,7 +99,8 @@ public class PlayerTest {
     /**
      * This test checks the right order in user's playlist after sort by song's artist
      */
-    @Test
+    @Test(timeout = 3000)
+    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByArtist() (wrong order in playlist)", testName = "test order by artist")*/
     public void checkSortingByArtist() {
         Collections.sort(playlistTest, new Comparator() {
             @Override
@@ -104,19 +114,21 @@ public class PlayerTest {
     /**
      * This test checks the right order in user's playlist after sort by song's duration
      */
-    @Test
+    @Test(timeout = 3000)
+    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of sortingBySongDuration() (wrong order in playlist)", testName = "test order by song duration")*/
     public void checkSortingBySongDuration() {
         Collections.sort(playlistTest, new Comparator() {
             @Override
             public int compare(Object o1, Object o2) {
-                return ((Song) o1).getSongDuration()-(((Song) o2).getSongDuration());
+                return ((Song) o1).getSongDuration() - (((Song) o2).getSongDuration());
             }
         });
 
         assertEquals(playlistTest, playerTest.sortedByDuration());
     }
 
-    @Test
+    @Test(timeout = 3000)
+    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of getSong() (return unexpected song by the time)", testName = "test get song")*/
     public void checkGetSong() {
         //test of stopped player
         assertNull(playerTest.getSong(0));
