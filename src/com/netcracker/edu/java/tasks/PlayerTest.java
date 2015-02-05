@@ -2,11 +2,10 @@ package com.netcracker.edu.java.tasks;
 
 import com.netcracker.edu.java.test.IpcTest;
 import com.netcracker.edu.java.test.IpcTestClass;
+import com.netcracker.edu.java.test.IpccenterTest;
 import org.junit.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import static com.netcracker.edu.java.tasks.Player.Song;
@@ -14,9 +13,11 @@ import static org.junit.Assert.*;
 
 
 @IpcTestClass(weight = 9)
-public class PlayerTest /*extends IpccenterTest<Player>*/ {
+public class PlayerTest extends IpccenterTest<Player> {
 
-    private static Player playerTest, playerTestNull;
+    private static Player etalon = new PlayerEtalon();
+    private Player playerTestNull = this.getImpl();
+    private Player impl = this.getImpl();
     private static List playlistTest;
     private static Song firstSong;
     private static Song secondSong;
@@ -26,11 +27,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
 
     @BeforeClass
     public static void setUpOneTime() {
-
-        //Here should be getImpl() which returns example of class PlayerImpl
-        playerTest = new PlayerEtalon();
         //WHAT IS THIS?
-        playerTestNull = new PlayerEtalon();
         firstSong = new Song("Miles Kane", "Don't Forget Who You Are", 182);
         secondSong = new Song("Katy Perry", "Roar", 202);
         thirdSong = new Song("The Beatles", "Help", 135);
@@ -40,7 +37,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
 
     @AfterClass
     public static void tearDownOneTime() {
-        playerTest = null;
+        etalon = null;
     }
 
     @Before
@@ -52,21 +49,24 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
         playlistTest.add(fourthSong);
         playlistTest.add(fifthSong);
 
-        // setting playlist in playerTest object before every test
-        playerTest.setPlaylist(playlistTest);
+        // setting playlist in etalon object before every test
+        etalon.setPlaylist(playlistTest);
+        impl.setPlaylist(playlistTest);
     }
 
     @After
     public void tearDown() {
         playlistTest.clear();
         //cleaning playlist after every test
-        playerTest.clearPlaylist();
+        etalon.clearPlaylist();
+        impl.clearPlaylist();
     }
 
     @Test(timeout = 3000, expected = IllegalStateException.class)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (IllegalStateException expected)",
             testName = "test order by name")
     public void checkSortByNameException() {
+        playerTestNull = this.getImpl();
         playerTestNull.sortedByName();
     }
 
@@ -74,6 +74,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByArtist() (IllegalStateException expected)",
             testName = "test order by artist")
     public void checkSortByArtistException() {
+        playerTestNull = this.getImpl();
         playerTestNull.sortedByArtist();
     }
 
@@ -81,6 +82,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByDuration() (IllegalStateException expected)",
             testName = "test order by duration")
     public void checkSortByDurationException() {
+        playerTestNull = this.getImpl();
         playerTestNull.sortedByDuration();
     }
 
@@ -89,11 +91,11 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      */
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of setPlaylist() (return unexpected value)",
-    testName = "test setter for Playlist")
+            testName = "test setter for Playlist")
     public void checkSetPlaylist() {
-        assertNotNull(playerTest.getPlaylist());
-        assertFalse(playerTest.getPlaylist().isEmpty());
-        assertEquals(playlistTest, playerTest.getPlaylist());
+        assertNotNull(impl.getPlaylist());
+        assertFalse(impl.getPlaylist().isEmpty());
+        assertEquals(etalon.getPlaylist(), impl.getPlaylist());
     }
 
 
@@ -102,10 +104,10 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      */
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of clearPlaylist() (list isn't empty)",
-    testName = " test clear Playlist")
+            testName = " test clear Playlist")
     public void checkClearPlaylist() {
-        playerTest.clearPlaylist();
-        assertTrue(playerTest.getPlaylist().isEmpty());
+        impl.clearPlaylist();
+        assertTrue(impl.getPlaylist().isEmpty());
     }
 
     /**
@@ -113,16 +115,11 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      */
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (wrong order in playlist)",
-    testName = " test order by name")
+            testName = " test order by name")
     public void checkSortingByName() {
-        Collections.sort(playlistTest, new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                return ((Song) o1).getSongName().compareTo(((Song) o2).getSongName());
-            }
-        });
 
-        assertEquals(playlistTest, playerTest.sortedByName());
+
+        assertEquals(etalon.sortedByName(), impl.sortedByName());
     }
 
     /**
@@ -130,15 +127,10 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      */
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByArtist() (wrong order in playlist)",
-    testName = "test order by artist")
+            testName = "test order by artist")
     public void checkSortingByArtist() {
-        Collections.sort(playlistTest, new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                return ((Song) o1).getArtist().compareTo(((Song) o2).getArtist());
-            }
-        });
-        assertEquals(playlistTest, playerTest.sortedByArtist());
+
+        assertEquals(etalon.sortedByArtist(), impl.sortedByArtist());
     }
 
     /**
@@ -146,16 +138,10 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      */
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingBySongDuration() (wrong order in playlist)",
-    testName = "test order by song duration")
+            testName = "test order by song duration")
     public void checkSortingBySongDuration() {
-        Collections.sort(playlistTest, new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                return ((Song) o1).getSongDuration() - (((Song) o2).getSongDuration());
-            }
-        });
 
-        assertEquals(playlistTest, playerTest.sortedByDuration());
+        assertEquals(etalon.sortedByDuration(), impl.sortedByDuration());
     }
 
 
@@ -163,31 +149,30 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
     @IpcTest(mark = 1, failedMessage = "Incorrect work of getSong() (return unexpected song by the time)", testName = "test get song")
     public void checkGetSong() {
         //test of stopped player
-        assertNull(playerTest.getSong(0));
-
+        assertNull(impl.getSong(0));
         //test of playing player
-        playerTest.play(50);
-        assertEquals(playerTest.getSong(51), firstSong);
-        assertEquals(playerTest.getSong(333), secondSong);
-        assertEquals(playerTest.getSong(671), fourthSong);
-        assertNull(playerTest.getSong(927));
+        impl.play(50);
+        assertEquals(impl.getSong(51), firstSong);
+        assertEquals(impl.getSong(333), secondSong);
+        assertEquals(impl.getSong(671), fourthSong);
+        assertNull(impl.getSong(927));
 
         //test of playing player after pause's call
-        playerTest.play(0);
-        playerTest.pause(183);
-        assertEquals(playerTest.getSong(1231), secondSong);
+        impl.play(0);
+        impl.pause(183);
+        assertEquals(impl.getSong(1231), secondSong);
 
-        playerTest.play(195);
-        playerTest.pause(315);
-        assertEquals(playerTest.getSong(1231), firstSong);
+        impl.play(195);
+        impl.pause(315);
+        assertEquals(impl.getSong(1231), firstSong);
 
-        playerTest.play(598);
-        playerTest.pause(1687);
-        assertNull(playerTest.getSong(21));
+        impl.play(598);
+        impl.pause(1687);
+        assertNull(impl.getSong(21));
 
         //test of stopped player after playing
-        playerTest.play(168);
-        playerTest.stop();
-        assertNull(playerTest.getSong(123));
+        impl.play(168);
+        impl.stop();
+        assertNull(impl.getSong(123));
     }
 }
