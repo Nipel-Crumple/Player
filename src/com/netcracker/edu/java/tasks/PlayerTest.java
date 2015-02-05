@@ -22,17 +22,20 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
     private static Song secondSong;
     private static Song thirdSong;
     private static Song fourthSong;
-    private static Song fivethSong;
+    private static Song fifthSong;
 
     @BeforeClass
     public static void setUpOneTime() {
+
+        //Here should be getImpl() which returns example of class PlayerImpl
         playerTest = new PlayerEtalon();
+        //WHAT IS THIS?
         playerTestNull = new PlayerEtalon();
         firstSong = new Song("Miles Kane", "Don't Forget Who You Are", 182);
         secondSong = new Song("Katy Perry", "Roar", 202);
         thirdSong = new Song("The Beatles", "Help", 135);
         fourthSong = new Song("Arctic Monkeys", "Snap Out of It", 193);
-        fivethSong = new Song("Jack White", "Steady as She Go", 164);
+        fifthSong = new Song("Jack White", "Steady as She Go", 164);
     }
 
     @AfterClass
@@ -47,7 +50,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
         playlistTest.add(secondSong);
         playlistTest.add(thirdSong);
         playlistTest.add(fourthSong);
-        playlistTest.add(fivethSong);
+        playlistTest.add(fifthSong);
 
         // setting playlist in playerTest object before every test
         playerTest.setPlaylist(playlistTest);
@@ -56,9 +59,29 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
     @After
     public void tearDown() {
         playlistTest.clear();
-
         //cleaning playlist after every test
         playerTest.clearPlaylist();
+    }
+
+    @Test(timeout = 3000, expected = IllegalStateException.class)
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (IllegalStateException expected)",
+            testName = "test order by name")
+    public void checkSortByNameException() {
+        playerTestNull.sortedByName();
+    }
+
+    @Test(timeout = 3000, expected = IllegalStateException.class)
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByArtist() (IllegalStateException expected)",
+            testName = "test order by artist")
+    public void checkSortByArtistException() {
+        playerTestNull.sortedByArtist();
+    }
+
+    @Test(timeout = 3000, expected = IllegalStateException.class)
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByDuration() (IllegalStateException expected)",
+            testName = "test order by duration")
+    public void checkSortByDurationException() {
+        playerTestNull.sortedByDuration();
     }
 
     /**
@@ -134,26 +157,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
 
         assertEquals(playlistTest, playerTest.sortedByDuration());
     }
-    @Test(timeout = 3000, expected = IllegalStateException.class)
-    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (IllegalStateException expected)",
-        testName = "test order by name")
-    public void checkSortByNameException() {
-        playerTestNull.sortedByName();
-    }
 
-    @Test(timeout = 3000, expected = IllegalStateException.class)
-    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByArtist() (IllegalStateException expected)",
-        testName = "test order by artist")
-    public void checkSortByArtistException() {
-        playerTestNull.sortedByArtist();
-    }
-
-    @Test(timeout = 3000, expected = IllegalStateException.class)
-    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByDuration() (IllegalStateException expected)",
-        testName = "test order by duration")
-    public void checkSortByDurationException() {
-        playerTestNull.sortedByDuration();
-    }
 
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of getSong() (return unexpected song by the time)", testName = "test get song")
