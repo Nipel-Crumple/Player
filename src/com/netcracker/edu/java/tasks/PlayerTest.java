@@ -63,22 +63,24 @@ public class PlayerTest extends IpccenterTest<Player> {
         playlistTest.clear();
         //cleaning playlist after every test
         etalon.clearPlaylist();
-        impl.clearPlaylist();
+        if (impl.getPlaylist() != null) {
+            impl.clearPlaylist();
+        }
     }
 
     @Test(timeout = 3000, expected = IllegalStateException.class)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (IllegalStateException expected)",
             testName = "test order by name")
     public void checkSortByNameException() {
-        playerTestNull = this.getImpl();
+        impl.setPlaylist(null);
         playerTestNull.sortedByName();
     }
 
     @Test(timeout = 3000, expected = IllegalStateException.class)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByArtist() (IllegalStateException expected)",
             testName = "test order by artist")
-    public void checkSortByArtistException() {
-        playerTestNull = this.getImpl();
+    public void checkSortByArtistException(){
+        impl.setPlaylist(null);
         playerTestNull.sortedByArtist();
     }
 
@@ -86,7 +88,7 @@ public class PlayerTest extends IpccenterTest<Player> {
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByDuration() (IllegalStateException expected)",
             testName = "test order by duration")
     public void checkSortByDurationException() {
-        playerTestNull = this.getImpl();
+        impl.setPlaylist(null);
         playerTestNull.sortedByDuration();
     }
 
@@ -121,8 +123,6 @@ public class PlayerTest extends IpccenterTest<Player> {
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (wrong order in playlist)",
             testName = " test order by name")
     public void checkSortingByName() {
-
-
         assertEquals(etalon.sortedByName(), impl.sortedByName());
     }
 
