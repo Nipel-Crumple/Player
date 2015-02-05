@@ -101,14 +101,14 @@ public interface Player {
         private String songName;
         private int songDuration;
 
+        public Song() {
+
+        }
+
         public Song(String artist, String songName, int songDuration) {
             setArtist(artist);
             setSongName(songName);
             setSongDuration(songDuration);
-        }
-
-        public Song() {
-
         }
 
         public String getArtist() {

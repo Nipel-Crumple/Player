@@ -1,5 +1,7 @@
 package com.netcracker.edu.java.tasks;
 
+import com.netcracker.edu.java.test.IpcTest;
+import com.netcracker.edu.java.test.IpcTestClass;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import static com.netcracker.edu.java.tasks.Player.Song;
 import static org.junit.Assert.*;
 
 
-/*@IpcTestClass(weight = 7.5)*/
+@IpcTestClass(weight = 9)
 public class PlayerTest /*extends IpccenterTest<Player>*/ {
 
     private static Player playerTest, playerTestNull;
@@ -63,8 +65,8 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      * Test helps us to find out if user's playlist was installed incorrectly
      */
     @Test(timeout = 3000)
-    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of setPlaylist() (return unexpected value)",
-    testName = "test setter for Playlist")*/
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of setPlaylist() (return unexpected value)",
+    testName = "test setter for Playlist")
     public void checkSetPlaylist() {
         assertNotNull(playerTest.getPlaylist());
         assertFalse(playerTest.getPlaylist().isEmpty());
@@ -76,8 +78,8 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      * Check if playlist was cleared not properly
      */
     @Test(timeout = 3000)
-    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of clearPlaylist() (list isn't empty)",
-    testName = " test clear Playlist")*/
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of clearPlaylist() (list isn't empty)",
+    testName = " test clear Playlist")
     public void checkClearPlaylist() {
         playerTest.clearPlaylist();
         assertTrue(playerTest.getPlaylist().isEmpty());
@@ -87,8 +89,8 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      * This test checks the right order in user's playlist after sort by song's name
      */
     @Test(timeout = 3000)
-    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (wrong order in playlist)",
-    testName = " test order by name")*/
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (wrong order in playlist)",
+    testName = " test order by name")
     public void checkSortingByName() {
         Collections.sort(playlistTest, new Comparator() {
             @Override
@@ -104,8 +106,8 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      * This test checks the right order in user's playlist after sort by song's artist
      */
     @Test(timeout = 3000)
-    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByArtist() (wrong order in playlist)",
-    testName = "test order by artist")*/
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByArtist() (wrong order in playlist)",
+    testName = "test order by artist")
     public void checkSortingByArtist() {
         Collections.sort(playlistTest, new Comparator() {
             @Override
@@ -120,8 +122,8 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      * This test checks the right order in user's playlist after sort by song's duration
      */
     @Test(timeout = 3000)
-    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of sortingBySongDuration() (wrong order in playlist)",
-    testName = "test order by song duration")*/
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingBySongDuration() (wrong order in playlist)",
+    testName = "test order by song duration")
     public void checkSortingBySongDuration() {
         Collections.sort(playlistTest, new Comparator() {
             @Override
@@ -133,28 +135,28 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
         assertEquals(playlistTest, playerTest.sortedByDuration());
     }
     @Test(timeout = 3000, expected = IllegalStateException.class)
-    /*@IpcTest(mark = 0.5, failedMessage = "Incorrect work of sortingByName() (IllegalStateException expected)",
-        testName = "test order by name")*/
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (IllegalStateException expected)",
+        testName = "test order by name")
     public void checkSortByNameException() {
         playerTestNull.sortedByName();
     }
 
     @Test(timeout = 3000, expected = IllegalStateException.class)
-    /*@IpcTest(mark = 0.5, failedMessage = "Incorrect work of sortingByArtist() (IllegalStateException expected)",
-        testName = "test order by artist")*/
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByArtist() (IllegalStateException expected)",
+        testName = "test order by artist")
     public void checkSortByArtistException() {
         playerTestNull.sortedByArtist();
     }
 
     @Test(timeout = 3000, expected = IllegalStateException.class)
-    /*@IpcTest(mark = 0.5, failedMessage = "Incorrect work of sortingByDuration() (IllegalStateException expected)",
-        testName = "test order by duration")*/
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByDuration() (IllegalStateException expected)",
+        testName = "test order by duration")
     public void checkSortByDurationException() {
         playerTestNull.sortedByDuration();
     }
 
     @Test(timeout = 3000)
-    /*@IpcTest(mark = 1, failedMessage = "Incorrect work of getSong() (return unexpected song by the time)", testName = "test get song")*/
+    @IpcTest(mark = 1, failedMessage = "Incorrect work of getSong() (return unexpected song by the time)", testName = "test get song")
     public void checkGetSong() {
         //test of stopped player
         assertNull(playerTest.getSong(0));
