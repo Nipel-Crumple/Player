@@ -11,6 +11,10 @@ import java.util.List;
 import static com.netcracker.edu.java.tasks.Player.Song;
 import static org.junit.Assert.*;
 
+/**
+ * @author Vadim Varnavsky
+ * @author Yefim Krokhin
+ */
 
 @IpcTestClass(weight = 9)
 public class PlayerTest extends IpccenterTest<Player> {
