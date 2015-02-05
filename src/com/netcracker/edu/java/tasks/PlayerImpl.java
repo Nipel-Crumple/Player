@@ -9,8 +9,8 @@ import java.util.List;
  * @author Yefim Krokhin
  */
 
-public class PlayerEtalon implements Player {
-    private List<Player.Song> playlist;
+public class PlayerImpl implements Player {
+    private List<Song> playlist;
     private int startTime = 0;
     private int pauseTime = 0;
 

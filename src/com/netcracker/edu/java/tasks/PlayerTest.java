@@ -12,6 +12,10 @@ import java.util.List;
 import static com.netcracker.edu.java.tasks.Player.Song;
 import static org.junit.Assert.*;
 
+/**
+ * @author Vadim Varnavsky
+ * @author Yefim Krokhin
+ */
 
 @IpcTestClass(weight = 9)
 public class PlayerTest /*extends IpccenterTest<Player>*/ {
@@ -89,7 +93,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      */
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of setPlaylist() (return unexpected value)",
-    testName = "test setter for Playlist")
+            testName = "test setter for Playlist")
     public void checkSetPlaylist() {
         assertNotNull(playerTest.getPlaylist());
         assertFalse(playerTest.getPlaylist().isEmpty());
@@ -102,7 +106,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      */
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of clearPlaylist() (list isn't empty)",
-    testName = " test clear Playlist")
+            testName = " test clear Playlist")
     public void checkClearPlaylist() {
         playerTest.clearPlaylist();
         assertTrue(playerTest.getPlaylist().isEmpty());
@@ -113,7 +117,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      */
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByName() (wrong order in playlist)",
-    testName = " test order by name")
+            testName = " test order by name")
     public void checkSortingByName() {
         Collections.sort(playlistTest, new Comparator() {
             @Override
@@ -130,7 +134,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      */
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingByArtist() (wrong order in playlist)",
-    testName = "test order by artist")
+            testName = "test order by artist")
     public void checkSortingByArtist() {
         Collections.sort(playlistTest, new Comparator() {
             @Override
@@ -146,7 +150,7 @@ public class PlayerTest /*extends IpccenterTest<Player>*/ {
      */
     @Test(timeout = 3000)
     @IpcTest(mark = 1, failedMessage = "Incorrect work of sortingBySongDuration() (wrong order in playlist)",
-    testName = "test order by song duration")
+            testName = "test order by song duration")
     public void checkSortingBySongDuration() {
         Collections.sort(playlistTest, new Comparator() {
             @Override
